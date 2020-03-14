@@ -123,7 +123,11 @@ def main():
     md5sum_iso_file = misc.join_paths(config.WORK_DIR, 'md5sum')
     sha1sum_iso_file = misc.join_paths(config.WORK_DIR, 'sha1sum')
     sha256sum_iso_file = misc.join_paths(config.WORK_DIR, 'sha256sum')
-    iso_file = '%s/%s-%s-%s.iso' % (config.WORK_DIR, distrib, arch, release)
+    
+    if config.LABEL != "default" or None:
+        iso_file = '%s/%s.iso' % (config.WORK_DIR, config.LABEL)
+    else :
+        iso_file = '%s/%s-%s-%s.iso' % (config.WORK_DIR, distrib, arch, release)
     if os.path.exists(iso_file):
         message.sub_debug('Removing', iso_file)
         os.unlink(iso_file)
