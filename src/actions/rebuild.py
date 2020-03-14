@@ -327,12 +327,20 @@ def main():
     # Create the ISO filesystem
     message.sub_info('Creating ISO')
     os.chdir(config.ISO_DIR)
-    misc.system_command(('xorriso', '-as', 'mkisofs', '-r', '-V', \
-        distrib + '-' + arch + '-' + release, '-isohybrid-mbr',\
-        '/usr/lib/ISOLINUX/isohdpfx.bin', '-b', 'isolinux/isolinux.bin', \
-        '-c', 'isolinux/boot.cat', '-J', '-l', '-no-emul-boot', \
-        '-boot-load-size', '4', '-boot-info-table', '-o', iso_file, \
-        '-cache-inodes', '-input-charset', 'utf-8', '.'))
+    if config.LABEL != "default" or None:
+        misc.system_command(('xorriso', '-as', 'mkisofs', '-r', '-V', \
+            config.LABEL, '-isohybrid-mbr',\
+            '/usr/lib/ISOLINUX/isohdpfx.bin', '-b', 'isolinux/isolinux.bin', \
+            '-c', 'isolinux/boot.cat', '-J', '-l', '-no-emul-boot', \
+            '-boot-load-size', '4', '-boot-info-table', '-o', iso_file, \
+            '-cache-inodes', '-input-charset', 'utf-8', '.'))
+    else:  # use the kernel the user specified in the config.
+        misc.system_command(('xorriso', '-as', 'mkisofs', '-r', '-V', \
+            distrib + '-' + arch + '-' + release, '-isohybrid-mbr',\
+            '/usr/lib/ISOLINUX/isohdpfx.bin', '-b', 'isolinux/isolinux.bin', \
+            '-c', 'isolinux/boot.cat', '-J', '-l', '-no-emul-boot', \
+            '-boot-load-size', '4', '-boot-info-table', '-o', iso_file, \
+            '-cache-inodes', '-input-charset', 'utf-8', '.'))
 
     message.sub_info('Creating ISO checksums')
     md5checksum = misc.generate_hash_for_file('md5', iso_file)
