@@ -17,6 +17,7 @@ conf = ConfigParser.SafeConfigParser(
         'VRAM': '256',
         'ISO': '',
         'DEB': '',
+        'LABEL': 'default',
         'HOOK': '',
         'KERNEL': 'default',
         'PURGE_KERNEL': True,
@@ -41,6 +42,7 @@ VRAM = '{}'.format(conf.get('preferences', 'VRAM'))
 
 ISO = '{}'.format(conf.get('saved', 'ISO'))
 DEB = '{}'.format(conf.get('saved', 'DEB'))
+LABEL = '{}'.format(conf.get('saved', 'LABEL'))
 HOOK = '{}'.format(conf.get('saved', 'HOOK'))
 KERNEL = '{}'.format(conf.get('saved', 'KERNEL'))
 PURGE_KERNEL = '{}'.format(conf.get('saved', 'PURGE_KERNEL'))
